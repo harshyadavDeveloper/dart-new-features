@@ -1,15 +1,28 @@
-// playground/main.dart
-// Quick playground to test Dart features.
+import 'dart:io';
 
-(String, int) getUser() => ('Harsh', 23);
+// ------------------- FEATURE DEMOS -------------------
 
-String describeNumber(int? value) {
-  return switch (value) {
-    null => 'No value',
+void demoRecords() {
+  print("\n--- RECORDS DEMO ---");
+  (String, int) user = ("Harsh", 23);
+
+  final (name, age) = user;
+  print("Record -> Name: $name, Age: $age");
+}
+
+void demoPatterns() {
+  print("\n--- PATTERN MATCHING DEMO ---");
+
+  int? value = 10;
+
+  String result = switch (value) {
+    null => 'Value is null',
     0 => 'Zero',
     int v when v > 0 => 'Positive: $v',
     int v => 'Negative: $v',
   };
+
+  print("Pattern Result: $result");
 }
 
 enum Status {
@@ -20,34 +33,92 @@ enum Status {
   const Status(this.code);
 }
 
-void main() {
-  print('--- Playground Ready ---');
+void demoEnums() {
+  print("\n--- ENUMS DEMO ---");
 
-  // 1. Record example
-  final (name, age) = getUser();
-  print('Record -> Name: $name, Age: $age');
-
-  // 2. Pattern matching example
-  print('Pattern Match -> ${describeNumber(10)}');
-  print('Pattern Match -> ${describeNumber(null)}');
-
-  // 3. Enum example
   final s = Status.success;
-  print('Enum -> $s, Code: ${s.code}');
+  print("Status: $s, Code: ${s.code}");
 
-  // 4. Simple list destructuring
+  for (final status in Status.values) {
+    print("• $status -> ${status.code}");
+  }
+}
+
+void demoListPatterns() {
+  print("\n--- LIST PATTERNS DEMO ---");
+
   final list = [1, 2, 3];
+
   switch (list) {
     case [int a, int b, ...]:
-      print('List -> First two: $a, $b');
+      print("First two values: $a, $b");
     default:
-      print('List pattern did not match');
+      print("Pattern did not match");
   }
+}
 
-  // 5. Map pattern example
-  final user = {'name': 'Harsh', 'age': 23};
+void demoMapPatterns() {
+  print("\n--- MAP PATTERNS DEMO ---");
+
+  final user = {"name": "Harsh", "age": 23};
+
   switch (user) {
-    case {'name': String n, 'age': int a}:
-      print('Map -> User: $n, Age: $a');
+    case {"name": String n, "age": int a}:
+      print("User -> $n ($a years old)");
+    default:
+      print("Not a valid user map");
+  }
+}
+
+// ------------------- MENU LOGIC -------------------
+
+void showMenu() {
+  print('''
+=================================
+        DART FEATURE MENU
+=================================
+1. Records Demo
+2. Pattern Matching Demo
+3. Enums Demo
+4. List Patterns Demo
+5. Map Patterns Demo
+0. Exit
+---------------------------------
+Enter your choice: 
+''');
+}
+
+void handleChoice(String? choice) {
+  switch (choice) {
+    case '1':
+      demoRecords();
+      break;
+    case '2':
+      demoPatterns();
+      break;
+    case '3':
+      demoEnums();
+      break;
+    case '4':
+      demoListPatterns();
+      break;
+    case '5':
+      demoMapPatterns();
+      break;
+    case '0':
+      print("Goodbye!");
+      exit(0);
+    default:
+      print("Invalid choice! Try again.");
+  }
+}
+
+void main() {
+  while (true) {
+    showMenu();
+    final input = stdin.readLineSync();
+    handleChoice(input);
+    print("\nPress ENTER to continue...");
+    stdin.readLineSync();
   }
 }
