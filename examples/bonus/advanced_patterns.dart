@@ -15,7 +15,7 @@ String describeUser(UserRecord user) {
 }
 
 void main() {
-  final u1 = (id: 1, name: 'Harsh', age: 23);
+  final u1 = (id: 1, name: 'Ravi Kumar', age: 23);
   final u2 = (id: 2, name: 'Shravan', age: 15);
   final u3 = (id: 3, name: 'Shivam', age: null);
 
